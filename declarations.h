@@ -9,7 +9,7 @@ typedef std::vector<double> vec; // Nombre para vector de doubles
 
 //Constantes globales
 const double G = 8.2214E-7; //Constantes G
-const double T = 80; //Tiempo
+const double T = 54; //Tiempo
 const double DT = 0.0001; //Intervalo de tiempo
 const int NSTEPS = int(T/DT); //Pasos
 const double eps = 0.0001; //margen error

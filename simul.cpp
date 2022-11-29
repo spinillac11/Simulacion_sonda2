@@ -31,12 +31,14 @@ void update(bodies & Nbody, double time){
                 Nbody[ii].F = Nbody[ii].F + r*esc;
             }
         }
-        //Actualizar posicion y velocidad
+        //Actualizar posicion, velocidad y energia cinetica
         if(time == 0.0){
             Nbody[ii].start_leap_frog(DT);
+            Nbody[ii].e_k();
         }
         else{
             Nbody[ii].leap_frog(DT);
+            Nbody[ii].e_k();
         }
     }
 }
@@ -54,10 +56,13 @@ void print(bodies & Nbody){
         time = DT*ii;
         update(Nbody, time);
         trans_galileo(Nbody);
+
+        //Energia cinetica sonda
+        double Ek = Nbody[0].E;
         
         //Imprimir cada 100 pasos
         if(ii%100 == 0){
-            outfile << time << " , ";
+            outfile << time << " , " << Ek << " , ";
             for(int ii = 0; ii < N; ii++){
             outfile << Nbody[ii].R.x << " , " << Nbody[ii].R.y <<  " , ";
             }
@@ -147,9 +152,11 @@ void init_assist(Cuerpo & P, vec Phi, vec time){
                 count = ii;
             }
         }
-        // Mejor phi
+        // Mejor phi y tiempo
         phi = Phi[count];
-        std::cout << "El angulo inicial entre los planetas es: " << phi << " rad";
+        double t = time[count];
+        std::cout << "El angulo inicial entre los planetas es: " << phi << " rad \n";
+        std::cout << "La sonda llega al objetivo en t = " << t << " meses \n";
     }
     else{
         std::cout << "No se encontro posicion optima" << "\n";

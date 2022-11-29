@@ -43,7 +43,7 @@ struct Vec3D
     double operator^(const Vec3D &v){
         return x*v.x + y*v.y + z*v.z;
     }
-    //Calcular norma
+    //Norma vector
     double norm(){
         return sqrt(x*x+y*y+z*z);
     }
@@ -61,7 +61,7 @@ struct Cuerpo
     Vec3D R, V, F;
 
     //Constructor condiciones iniciales
-    Cuerpo(double x0, double y0, double z0, double Vx0, double Vy0, double Vz0, double m){
+    Cuerpo(double x0, double y0, double z0, double Vx0, double Vy0, double Vz0, double m, double r){
         this -> mass = m;
         this -> R.x = x0;
         this -> R.y = y0;
@@ -69,6 +69,7 @@ struct Cuerpo
         this -> V.x = Vx0;
         this -> V.y = Vy0;
         this -> V.z = Vz0;
+        this -> rad = r;
     }
 
     //Leap_Frog algorithm
@@ -79,5 +80,9 @@ struct Cuerpo
     void leap_frog(const double & dt){
         V = V + F*(dt/(mass));
         R = R + V*dt;
+    }
+    //Energia cinetica
+    void e_k(){
+        E = 0.5*mass*(V^V);
     }
 };
